@@ -67,4 +67,15 @@ body{
     color: white;
     font-weight: 500;
     border-radius: 50px;
+    transition: 200ms ease-in-out;
+}
+.__btn:hover{
+    background-color:#e930a2
+
+}
+
+/* error handling */
+
+.invaild-input{
+    color:rgb(252, 27, 27);
 }
