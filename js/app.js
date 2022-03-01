@@ -32,8 +32,14 @@ const displayMoreDetails = (moredata) =>{
     const div = document.createElement('div');
     const sensors = moredata.mainFeatures.sensors;
     let others = [];
-    const data = moredata;
-    console.log(data);
+    let release;
+    if(moredata.releaseDate === null || moredata.releaseDate === undefined || moredata.releaseDate === ''){
+        release = 'No Release Date Found'
+    }else{
+      release = moredata.releaseDate;
+    }
+
+    //loping over other object and putting values to an array;
     if(moredata.others === undefined || moredata.others === null) {
       others = []
     }else{
@@ -63,7 +69,7 @@ const displayMoreDetails = (moredata) =>{
           <p> <span class="fw-bold">Memory :</span> ${moredata.mainFeatures.memory}  </p>
           <p> <span class="fw-bold">Sensors :</span> ${sensors.map((sensor) => sensor) }  </p>
           <p> <span class="fw-bold">Others :</span> ${others.map((other)=>other)}  </p>
-          <p> <span class="fw-bold">Release Date :</span> ${moredata.releaseDate} </p>
+          <p> <span class="fw-bold">Release Date :</span> ${release} </p>
           </div>
         </div>
       </div>
@@ -86,8 +92,6 @@ const getMoreData = async (mobileId) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/phone/${mobileId}`)
     const data = await response.json();
     displayMoreDetails(data.data);
-    console.log(data.data)
-  
 }
 
 
