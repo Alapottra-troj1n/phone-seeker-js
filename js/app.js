@@ -6,7 +6,17 @@ const successInput = document.querySelector('.success-input');
 const successInputValue = successInput.children[0];
 const noResultsFound = document.querySelector('.no-results-input');
 const moreDetailContainer = document.querySelector('.detail-container');
+const spinner = document.querySelector('#spinner');
 
+
+// spinner function
+
+const showSpinner = () =>{
+  spinner.style.display = 'block';
+}
+const hideSpinner = () =>{
+  spinner.style.display = 'none';
+}
 
 
 //close button of moredetails
@@ -168,6 +178,7 @@ const displayData = (data) => {
             mobileContainer.appendChild(div);
     
         }
+        hideSpinner();
         if(data.length > 20){
           seeMoreBtn.classList.remove('d-none');
         }
@@ -217,6 +228,9 @@ searchBtn.addEventListener('click',()=>{
         //ERROR-HANDLING
         invaildInput.classList.add('d-none');
         successInputValue.innerText = searchValue;
+        //SHOWING SPINNER
+        showSpinner();
+
         //CALLING THE FETCH FUNCTION
         getData(searchValue.toLowerCase());
        
