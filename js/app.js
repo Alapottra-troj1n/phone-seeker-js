@@ -178,6 +178,7 @@ const displayData = (data) => {
             mobileContainer.appendChild(div);
     
         }
+        seeMoreBtn.classList.add('d-none');
         hideSpinner();
         if(data.length > 20){
           seeMoreBtn.classList.remove('d-none');
