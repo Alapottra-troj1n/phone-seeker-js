@@ -8,21 +8,13 @@ const noResultsFound = document.querySelector('.no-results-input');
 const moreDetailContainer = document.querySelector('.detail-container');
 
 
-// brand: "Samsung"
-// image: "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s22-5g.jpg"
-// mainFeatures:
-// chipSet: "Exynos 2200 (4 nm) - EuropeQualcomm SM8450 Snapdragon 8 Gen 1 (4 nm) - ROW"
-// displaySize: "6.1 inches, 90.1 cm2 (~87.4% screen-to-body ratio)"
-// memory: "128GB 8GB RAM, 256GB 8GB RAM"
-// sensors: (7) ['Fingerprint (under display', 'ultrasonic)', 'accelerometer', 'gyro', 'proximity', 'compass', 'barometer']
-// storage: "128GB/256GB storage, no card slot"
-// [[Prototype]]: Object
-// name: "Galaxy S22 5G"
-// others: {WLAN: 'Wi-Fi 802.11 a/b/g/n/ac/6, dual-band, Wi-Fi Direct, hotspot', Bluetooth: '5.2, A2DP, LE', GPS: 'Yes, with A-GPS, GLONASS, BDS, GALILEO', NFC: 'Yes', Radio: 'No', …}
-// releaseDate: "Released 2022, February 25"
-// slug: "samsung_galaxy_s22_5g-11253"
+
+//close button of moredetails
 
 
+const removeMoredetails = () =>{
+  moreDetailContainer.textContent = '';
+}
 
 
 //display more data if moredetails button is clicked
@@ -55,6 +47,7 @@ const displayMoreDetails = (moredata) =>{
     div.classList.add('detail-card');
     div.innerHTML =`
     <div class="card mb-3" style="max-width:840px;">
+    <span id="close-btn" onclick="removeMoredetails()">X</span>
     <div class="row g-0">
       <div class="col-md-5 col-sm-12 d-flex justify-content-center align-items-center p-4">
         <img src="${moredata.image}" alt="" class="img-fluid">
@@ -83,17 +76,63 @@ const displayMoreDetails = (moredata) =>{
 
 
 
+// -----------------------OPTIONAL FUNCTION STARTS ------------------------------------------------------------
 
 
-
-//get more data of a mobile by clicking button
+//get all mobiles data of a mobile by clicking button
 
 const getMoreData = async (mobileId) => {
+    moreDetailContainer.scrollIntoView();
     const response = await fetch(`https://openapi.programming-hero.com/api/phone/${mobileId}`)
     const data = await response.json();
     displayMoreDetails(data.data);
 }
 
+ 
+
+const showAll = ()=>{
+  fetchDataforShowAll(globalSearchValue);
+
+}
+
+const displayAllData = async (displayalldata) => {
+  const mobiles = displayalldata.data;
+
+  mobileContainer.textContent = '';
+  document.querySelector('.search-input').value = '';
+  for(mobile of mobiles){
+      const div = document.createElement('div');
+      div.classList.add('col');
+      div.innerHTML = `
+      <div class="__card mx-auto">
+      <div class="__img-container">
+      <img src="${mobile.image}" alt="" class="img-fluid">
+      </div>
+      <div class="d-flex flex-column justify-content-center align-items-center">
+      <div class="__name">
+      <h5>${mobile.phone_name}</h5>
+      <p class = 'fs-6 text-center'> Brand : ${mobile.brand} </p>
+      </div>
+       <div class="details-btn-container"><button class="__btn" onclick="getMoreData('${mobile.slug}')">More Details</button></div>
+      </div>
+      </div>
+      `
+      mobileContainer.appendChild(div);
+
+  }
+  seeMoreBtn.classList.add('d-none');
+
+}
+
+const fetchDataforShowAll = async(showalldata) => {
+  const response = await fetch(`https://openapi.programming-hero.com/api/phones?search=${showalldata}`);
+  const data = await response.json();
+  displayAllData(data)
+}
+
+
+
+// --------------------------------OPTIONAL FUNCTIONS ENDS-------------------------------------------
 
 
 
@@ -129,8 +168,11 @@ const displayData = (data) => {
             mobileContainer.appendChild(div);
     
         }
+        if(data.length > 20){
+          seeMoreBtn.classList.remove('d-none');
+        }
         //ERROR-HANDLING
-        seeMoreBtn.classList.remove('d-none');
+       
         successInput.classList.remove('d-none');
         noResultsFound.classList.add('d-none');
 
@@ -153,6 +195,8 @@ const displayData = (data) => {
 
 
 
+
+
 //fetching data function
 
 const getData = async(value) => {
@@ -168,6 +212,7 @@ const getData = async(value) => {
 
 searchBtn.addEventListener('click',()=>{
     const searchValue = document.querySelector('.search-input').value;
+    globalSearchValue = searchValue;
     if(searchValue.length > 0) {
         //ERROR-HANDLING
         invaildInput.classList.add('d-none');
@@ -186,5 +231,10 @@ searchBtn.addEventListener('click',()=>{
     
 
 });
+
+
+
+
+
 
 

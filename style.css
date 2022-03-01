@@ -22,6 +22,7 @@ body{
 
 /* detail container */
 #close-btn{
+    position: absolute;
     top: 10px;
     left: 20px;
     cursor: pointer;
@@ -84,9 +85,6 @@ body{
 
 /* error handling */
 
-.invaild-input{
-    color:rgb(252, 27, 27);
-}
 
 
 /* custom responsiveness  */
