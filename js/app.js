@@ -194,6 +194,7 @@ const displayData = (data) => {
         noResultsFound.classList.remove('d-none');
         successInput.classList.add('d-none');
         seeMoreBtn.classList.add('d-none');
+        hideSpinner();
 
     }
 
@@ -242,6 +243,7 @@ searchBtn.addEventListener('click',()=>{
         mobileContainer.textContent = '';
         seeMoreBtn.classList.add('d-none');
         successInput.classList.add('d-none');
+        noResultsFound.classList.add('d-none');
     }
     
 
