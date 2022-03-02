@@ -43,7 +43,7 @@ const displayMoreDetails = (moredata) =>{
 
     //loping over other object and putting values to an array;
     if(moredata.others === undefined || moredata.others === null) {
-      others = []
+      others = ['Not found']
     }else{
       for (const [key, value] of Object.entries(moredata.others)) {
         others.push(`${key}: ${value}`);
